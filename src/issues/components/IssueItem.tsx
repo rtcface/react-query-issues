@@ -1,20 +1,33 @@
 import { FiInfo, FiMessageSquare, FiCheckCircle } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { Issue } from "../interfaces";
 import { FC } from "react";
+import { State } from "../interfaces/issues";
 
 interface Props {
   issue: Issue;
 }
 
 export const IssueItem: FC<Props> = ({ issue }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="card mb-2 issue">
+    <div
+      className="card mb-2 issue"
+      onClick={() => navigate(`/issues/issue/${issue.number}`)}
+    >
       <div className="card-body d-flex align-items-center">
-        {<FiInfo
-          size={30}
-          color="red"
-        />}
-        {/* <FiCheckCircle size={30} color="green" /> */}
+        {issue.state === State.Open ? (
+          <FiInfo
+            size={30}
+            color="red"
+          />
+        ) : (
+          <FiCheckCircle
+            size={30}
+            color="green"
+          />
+        )}
 
         <div className="d-flex flex-column flex-fill px-2">
           <span>Suggestion: {issue.title}</span>
